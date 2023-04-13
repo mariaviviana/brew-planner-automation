@@ -5,7 +5,7 @@ describe("Registrarse en BP", () => {
     const signUpPage = new SignUpPage();
     const loginPage = new LoginPage();
 
-    const numero = Math.floor(Math.random() * 100);
+    const numero = Math.floor(Math.random() * 1000);
     let user = `testing${numero}`;
     let email =`elmaiten2+${numero}@gmail.com`; 
     let admin =`viviana${numero}`;
@@ -27,7 +27,7 @@ it("Deberia registrar un usuario nuevo", () => {
 });
 /*after("Eliminacion de usuario", () => {
     cy.request({
-      url: `https://pushing-it-backend.herokuapp.com/api/deleteuser/${username}`,
+      url: `https://pushing-it-backend.herokuapp.com/api/deleteuser/${user}`,
       method: "DELETE",
     }).then((response) => {
       expect(response.status).equal(200);

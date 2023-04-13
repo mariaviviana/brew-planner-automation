@@ -5,6 +5,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-    "baseUrl":"http://stage.brewplanner.com/#/"
+    "baseUrl":"https://app.brewplanner.com/#/",
+    watchForFileChanges:false
   },
 });
