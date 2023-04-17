@@ -12,15 +12,19 @@ describe('Loguearse en BP', () => {
     cy.fixture('dataLogin').then((data) => {
       dataUser = data;
     });
-    cy.visit('');
   });
-  it('Deberia dar de alta un estilo de cerveza', () => {
+
+  beforeEach('login', () => {
+    cy.visit('');
     loginPage.ingresarUser(dataUser.user);
     loginPage.ingresarPass(dataUser.pass);
     loginPage.botonIngresar();
     beerStyleAdminPage.buttonAdmin();
     cy.wait(1000);
     beerStyleAdminPage.selectBeerStyleAdmin();
+  });
+
+  it('Deberia dar de alta un estilo de cerveza', () => {
     beerStyleAdminPage.inputNameBeerStyle('prueba');
     beerStyleAdminPage.selectColor();
     beerStyleAdminPage.buttonClick('CONFIRMA');
@@ -34,74 +38,52 @@ describe('Loguearse en BP', () => {
   });
 
   it('Deberia asociar iconos al estilo de cerveza', () => {
+    cy.wait(1000);
     //brewing
     beerStyleAdminPage.selectBeerStyle();
     beerStyleAdminPage.buttonClick('CONFIGURAR ICONOS DE COCCION');
-    //cy.contains('CONFIGURAR ICONOS DE COCCION').click();
     beerStyleAdminPage.buttonClick('Turnos de cocción');
-    //cy.contains('Turnos de cocción').click();
     cy.wait(1000);
-    cy.get(".form-group-dropdown-input div[id='0'] span").click({
-      force: true
-    });
+    beerStyleAdminPage.selectTurn();
     cy.wait(1000);
     beerStyleAdminPage.buttonClick('Seleccionar Icono');
-    //cy.contains('Seleccionar Icono').click();
-    cy.get('[data-menu-index="2"]').click({ force: true });
-    cy.get(
-      'button[class="form-group-button form-group-button-icon primary-icon "]',
-      { timeout: 1000 }
-    ).click();
-    /*cy.get("div[class='notifications-wrapper']").should(
-      'have.text',
-      'El estilo de cerveza ya está disponible×'
-    );*/
+    beerStyleAdminPage.selectIconBrew();
+    beerStyleAdminPage.selectButtonAdd();
+    //beerStyleAdminPage.notification().should('have.text','El estilo de cerveza ya está disponible×');
     cy.wait(1000);
-    cy.get('i[class*="fruit"]').should('exist');
+    beerStyleAdminPage.confirmTextFruit();
     beerStyleAdminPage.confirmWord('Fruta').should('have.text', 'Fruta');
 
     //fermenting
     beerStyleAdminPage.buttonClick('CONFIGURAR ICONOS DE FERMENTACION');
     beerStyleAdminPage.buttonClick('Día');
     cy.wait(1000);
-    cy.get(".form-group-dropdown-input div[id='0'] span").click({
-      force: true
-    });
+    beerStyleAdminPage.selectTurn();
     cy.wait(1000);
     beerStyleAdminPage.buttonClick('Seleccionar Icono');
-    cy.get('[data-menu-index="3"]').click({ force: true });
-    cy.get(
-      'button[class="form-group-button form-group-button-icon primary-icon "]',
-      { timeout: 1000 }
-    ).click();
-    cy.wait(1000);
-    cy.get("div[class='notifications-wrapper']").should(
-      'have.text',
-      'El estilo de cerveza ya está disponible×'
-    );
-    cy.get('.bp-stamps > .bp-stamp').should('exist');
-    cy.get(
-      '[data-reactid=".0.1.0.0.0.$admin-scaffolding-content10.0.0.1.0.2.$=10:0.$=12:$0-2"]'
-    ).should('have.text', 'Calabaza');
-
-    //packaging
-    beerStyleAdminPage.buttonClick('CONFIGURAR ICONOS DE EMPAQUETADO');
-    beerStyleAdminPage.buttonClick('Día');
-    cy.wait(1000);
-    cy.get(".form-group-dropdown-input div[id='0'] span").click({
-      force: true
-    });
-    cy.wait(1000);
-    beerStyleAdminPage.buttonClick('Seleccionar Icono');
-    
-    cy.get('[data-menu-index="4"]').click({ force: true });
+    beerStyleAdminPage.selectIconFerm();
     beerStyleAdminPage.selectButtonAccept();
+    cy.wait(1000);
     beerStyleAdminPage.notification().should(
       'have.text',
       'El estilo de cerveza ya está disponible×'
     );
+    beerStyleAdminPage.confirmIcon().should('exist');
+    beerStyleAdminPage.verifyText().should('have.text', 'Calabaza');
+    //packaging
+    beerStyleAdminPage.buttonClick('CONFIGURAR ICONOS DE EMPAQUETADO');
+    beerStyleAdminPage.buttonClick('Día');
     cy.wait(1000);
-    beerStyleAdminPage.confirmText().should('exist');
+    beerStyleAdminPage.selectTurn();
+    cy.wait(1000);
+    beerStyleAdminPage.buttonClick('Seleccionar Icono');
+    beerStyleAdminPage.selectIconPack();
+    beerStyleAdminPage.selectButtonAccept();
+    beerStyleAdminPage
+      .notification()
+      .should('have.text', 'El estilo de cerveza ya está disponible×');
+    cy.wait(1000);
+    beerStyleAdminPage.confirmTextHoney().should('exist');
     beerStyleAdminPage.confirmWord('Miel').should('have.text', 'Miel');
 
     beerStyleAdminPage.buttonClick('ATRAS');

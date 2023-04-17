@@ -3,7 +3,6 @@ import { CreateOrderDashboardPage } from '../support/pages/createOrderDashboardP
 //reference types = "cypress";
 describe('Prueba de inicio de sesion en BP', () => {
   let dataUser;
-  let position;
   const loginPage = new LoginPage();
   const createOrderDashboardPage = new CreateOrderDashboardPage();
 

@@ -4,11 +4,13 @@ export class InventoryPage {
       'button[style*="margin-top:8px;margin-right:8px;margin-left:-16px;"]';
     this.inventory = 'div[tabindex="0"]>div[class="app-main__side-bar-item"]';
     this.itemSelect = 'tr[class="mui-table-row admin-table-row"]';
-    this.adjustButton =
-      'button[class="form-group-button form-group-button-icon undefined "]';
+    this.adjustButton = '.form-group-button.form-group-button-icon';
     this.adjustField =
       'div[class="bp-location-adjusts-modal__fields"] > div[class="bp-location-adjusts-modal__input"]';
-    this.saveButton = 'span[style="position:relative;padding:0 16px;"]';
+
+    this.saveButton =
+      '.dashboard-modal-content.bp-custom-modal__content.inventory-transfer-modal.modal-adjust button';
+
     this.textFVerify =
       'tbody[class="mui-table-body admin-table-body"] tr:eq(0)';
     this.textSVerify =
@@ -28,18 +30,18 @@ export class InventoryPage {
   }
 
   buttonAdjust() {
-    cy.get(this.adjustButton).click({ force: true, multiple: true });
+    cy.get(this.adjustButton).eq(1).click({ force: true });
   }
 
-  fieldAdjust(amount) {
+  fieldAdjust() {
     cy.get(this.adjustField)
-      .eq(1) 
+      .eq(1)
       .type('{selectall}{del}') // Seleccionar todo y borrar el contenido existente
-      .type(amount); // Escribir el nuevo valor en el campo de entrada
+      .type('1000'); // Escribir el nuevo valor en el campo de entrada
   }
 
   buttonSave() {
-    cy.get(this.saveButton).contains("guardar").click({ force: true });
+    cy.get(this.saveButton).eq(1).click();
   }
 
   verifyFirstText() {

@@ -27,7 +27,7 @@ describe('Prueba de inicio de sesion en BP', () => {
     loginPage.botonIngresar();
   });
 
-  xit('Deberia dar de alta los depósitos', () => {
+  it('Deberia dar de alta los depósitos', () => {
     cy.wait(1000);
     locationPage.buttonAdmin();
     locationPage.selectLocation();
@@ -78,10 +78,16 @@ describe('Prueba de inicio de sesion en BP', () => {
     cy.wait(1000);
     inventoryPage.buttonAdjust();
     cy.wait(1000);
-    inventoryPage.fieldAdjust('1000');
+    inventoryPage.fieldAdjust();
+    cy.wait(1000);
     inventoryPage.buttonSave();
     cy.wait(1000);
-    inventoryPage.verifyFirstText(0).should('have.text', 'panAdditivesDeposito Venecia1.000,00 unidad1.000,00 unidad');
+    inventoryPage
+      .verifyFirstText(0)
+      .should(
+        'have.text',
+        'panAdditivesDeposito Venecia1.000,00 unidad1.000,00 unidad'
+      );
     /*inventoryPage.verifyFirstText(1).should('have.text', 'Additives');
     inventoryPage.verifyFirstText(2).should('have.text', 'subcategoria');
     inventoryPage.verifyFirstText(3).should('have.text','Deposito Venecia');
@@ -93,10 +99,15 @@ describe('Prueba de inicio de sesion en BP', () => {
     cy.wait(1000);
     inventoryPage.buttonAdjust();
     cy.wait(1000);
-    inventoryPage.fieldAdjust('1000');
+    inventoryPage.fieldAdjust();
     inventoryPage.buttonSave();
     cy.wait(1000);
-    inventoryPage.verifySecondText(0).should('have.text', 'salchichaAdditivesDeposito Venecia1.000,00 unidad1.000,00 unidad');
+    inventoryPage
+      .verifySecondText(0)
+      .should(
+        'have.text',
+        'salchichaAdditivesDeposito Venecia1.000,00 unidad1.000,00 unidad'
+      );
     /*inventoryPage.verifySecondText(1).should('have.text', 'Additives');
     inventoryPage.verifyFirstText(2).should('have.text', 'subcategoria');
     inventoryPage.verifySecondText(3).should('have.text','Deposito Venecia');

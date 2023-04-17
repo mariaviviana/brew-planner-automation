@@ -12,7 +12,7 @@ export class LoginPage {
   }
 
   botonIngresar() {
-    cy.contains('INGRESAR').click();
+    cy.contains('INGRESAR').click({timeout:5000});
   }
 
   botonRegister() {

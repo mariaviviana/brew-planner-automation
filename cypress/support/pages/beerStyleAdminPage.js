@@ -3,7 +3,7 @@ export class BeerStyleAdminPage {
     this.buttonBurger =
       'button[style*="margin-top:8px;margin-right:8px;margin-left:-16px;"]';
     this.beerStyle =
-      '//span[@class="icon-bar icon-beer-style-page-icon"]//ancestor::div[@class="app-main__side-bar-item"]';
+      'div[tabindex="0"]>div[class="app-main__side-bar-item"]';
     this.inputName = "input[id='mui-id-3']";
     this.colorBeerStyle = '.sp-replacer';
     this.selectFermDays =
@@ -11,11 +11,19 @@ export class BeerStyleAdminPage {
     this.selectPackDays =
       '[data-reactid=".0.1.0.0.0.$admin-scaffolding-header1.0.2.3"] > .form-group-textfield-input > input';
     this.message = '.custom-notification';
+    this.selectBeer='tbody[class="mui-table-body admin-table-body"] tr:eq(4)';
+    this.brewTurn=".form-group-dropdown-input div[id='0'] span";
+    this.brewIconSelect='[data-menu-index="2"]';
+    this.fermIconSelect='[data-menu-index="3"]';
+    this.packIconSelect='[data-menu-index="4"]';
     this.messageAlert = '[data-reactid=".0.5.0.$=10.0.1.0"] > div';
     this.textHoneyVerify='i[class*="honey"]';
+    this.textFruitVerify='i[class*="fruit"]';
+    this.textVerify='tbody >tr >td:eq(1)';
     this.popUpNotification="div[class='notifications-wrapper']";
     this.acceptButton='button[class="form-group-button form-group-button-icon primary-icon "]';
     this.menuIndex4='[data-menu-index="4"]';
+    this.iconVisible='.bp-stamps > .bp-stamp';
   }
 
   buttonAdmin() {
@@ -23,7 +31,7 @@ export class BeerStyleAdminPage {
   }
 
   selectBeerStyleAdmin() {
-    cy.xpath(this.beerStyle).contains('Estilos de cerveza').click();
+    cy.get(this.beerStyle).eq(2).click({ force: true });
   }
 
   inputNameBeerStyle(name) {
@@ -51,9 +59,7 @@ export class BeerStyleAdminPage {
   }
 
   selectBeerStyle() {
-    cy.get(
-      "[data-reactid='.0.1.0.0.0.$admin-scaffolding-content4.0.0.1.0.2.$=14:0.$=11:$4-1']"
-    ).click();
+    cy.get(this.selectBeer).click();
   }
 
   alertMessage() {
@@ -64,8 +70,40 @@ export class BeerStyleAdminPage {
     return cy.contains(word);
   }
 
-  confirmText(){
+  selectTurn(){
+    cy.get(this.brewTurn).click({force: true});
+  }
+
+  selectIconBrew(){
+    cy.get(this.brewIconSelect).click({ force: true });
+  }
+
+  selectIconFerm(){
+    cy.get(this.fermIconSelect).click({ force: true });
+  }
+
+  selectIconPack(){
+    cy.get(this.packIconSelect).click({ force: true });
+  }
+
+  selectButtonAdd(){
+    cy.get(this.acceptButton,{ timeout: 1000 }).click();
+  }
+
+  confirmTextFruit(){
+    return cy.get(this.textFruitVerify);
+  }; 
+
+  confirmTextHoney(){
     return cy.get(this.textHoneyVerify);
+  }
+
+  verifyText(){
+    return cy.get(this.textVerify);
+  }
+
+  confirmIcon(){
+    return cy.get(this.iconVisible);
   }
 
   notification(){
@@ -79,4 +117,5 @@ export class BeerStyleAdminPage {
   SelectMenuIndex4(){
     cy.get(this.menuIndex4).click({ force: true });
   }
+
 }

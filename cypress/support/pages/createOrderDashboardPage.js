@@ -8,6 +8,14 @@ export class CreateOrderDashboardPage {
     this.selectStyle = 'li[data-menu-index= "6"]';
     this.save = 'button[data-button="save"]';
     this.viewFermenter = 'div[class*="is-fermenter"]';
+    this.publicButton='cloud_upload';
+    this.buttonRight='span[class="dashboard-icon stop-dragging filtration-icon center-icon-small text-center icon-task icon-pumpkin"]';
+    this.editOption='a[class="context-menu icon"]';
+    this.actionButton='span[style="position:relative;padding:0 16px;"]';
+    this.brewConfig='div[tabindex="1"]';
+    this.fermConfig='div[tabindex="2"]';
+    this.packConfig='div[tabindex="3"]';
+    this.iconConfig='div[class="bp-textfield is-in-use"]';
   }
 
   openModal(posx, posy) {
@@ -40,5 +48,54 @@ export class CreateOrderDashboardPage {
 
   messageConfirm() {
     return cy.get(this.message, { timeout: 1000, force: true });
+  }
+
+  buttonPublic(){
+    cy.contains(this.publicButton).click({
+      timeout: 10000,
+      force: true
+    });
+  }
+
+  rightButton(){
+    cy.get(this.buttonRight).rightclick({ force: true });
+  }
+
+  selectEditOption(){
+    cy.get(this.editOption).first().click();
+  }
+
+  buttonConfirmAction(action){
+    cy.get(this.actionButton)
+      .contains(action)
+      .click();
+  }
+
+  configBrew(){
+    cy.get(this.brewConfig).click();
+  }
+
+  configFerm(){
+    cy.get(this.fermConfig).click();
+  }
+
+  configPack(){
+    cy.get(this.packConfig).click();
+  }
+
+  /*selectIconsFruit(){
+    cy.get(this.iconConfig).children('input[value="Fruta"]');
+  }
+
+  selectIconsCalabaza(){
+    cy.get(this.iconConfig).children('input[value="Calabaza"]');
+  }
+
+  selectIconsMiel(){
+    cy.get(this.iconConfig).children('input[value="Miel"]');
+  }*/
+
+  saveButton(){
+    cy.contains('Guardar').click();
   }
 }
