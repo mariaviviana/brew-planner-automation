@@ -8,8 +8,9 @@ export class CreateOrderDashboardPage {
     this.selectStyle = 'li[data-menu-index= "6"]';
     this.save = 'button[data-button="save"]';
     this.viewFermenter = 'div[class*="is-fermenter"]';
-    this.publicButton='cloud_upload';
-    this.buttonRight='span[class="dashboard-icon stop-dragging filtration-icon center-icon-small text-center icon-task icon-pumpkin"]';
+    this.publicButton='button[class="with-opacity btn-right-fixed btn-right-upload hidden-xs"]';
+    this.buttonRight='div[class*="react-draggable react-grid-item"]:eq(1)';
+    //this.buttonRight='span[class="dashboard-icon stop-dragging filtration-icon center-icon-small text-center icon-task icon-pumpkin"]';
     this.editOption='a[class="context-menu icon"]';
     this.actionButton='span[style="position:relative;padding:0 16px;"]';
     this.brewConfig='div[tabindex="1"]';
@@ -62,7 +63,7 @@ export class CreateOrderDashboardPage {
   }
 
   selectEditOption(){
-    cy.get(this.editOption).first().click();
+    cy.get(this.editOption).first().click({ force: true });
   }
 
   buttonConfirmAction(action){
