@@ -1,7 +1,7 @@
 import { LoginPage } from '../support/pages/loginPage';
 import { BeerStyleAdminPage } from '../support/pages/beerStyleAdminPage';
 //reference types = "cypress";
-describe('Loguearse en BP', () => {
+describe('Creacion de un estilo de cerveza', () => {
   let dataUser;
   //const numero = Math.floor(Math.random() * 100);
   //let beerName = `test${numero}`;

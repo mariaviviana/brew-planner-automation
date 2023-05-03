@@ -2,7 +2,7 @@ import { LoginPage } from '../support/pages/loginPage';
 import { ProductPage } from '../support/pages/productPage';
 import { CreateOrderDashboardPage } from '../support/pages/createOrderDashboardPage';
 //reference types = "cypress";
-describe('Prueba de inicio de sesion en BP', () => {
+describe('Creacion de un producto', () => {
   let dataUser;
   let dataItem;
   const loginPage = new LoginPage();

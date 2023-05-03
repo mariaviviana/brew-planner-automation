@@ -1,7 +1,7 @@
 import { LoginPage } from '../support/pages/loginPage';
 import { CreateOrderDashboardPage } from '../support/pages/createOrderDashboardPage';
 //reference types = "cypress";
-describe('Prueba de inicio de sesion en BP', () => {
+describe('Creacion de orden combinada', () => {
   let dataUser;
   const loginPage = new LoginPage();
   const createOrderDashboardPage = new CreateOrderDashboardPage();
@@ -25,7 +25,7 @@ describe('Prueba de inicio de sesion en BP', () => {
     loginPage.botonIngresar();
   });*/
 
-  xit('Deberia dar de alta a una orden combinada y eliminarla', () => {
+  it('Deberia dar de alta a una orden combinada y eliminarla', () => {
     createOrderDashboardPage.openModal(500, 300);
     createOrderDashboardPage.openMenuBeerStyles();
     createOrderDashboardPage.selectBeerStyle();

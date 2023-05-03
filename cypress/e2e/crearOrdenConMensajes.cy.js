@@ -1,7 +1,7 @@
 import { LoginPage } from '../support/pages/loginPage';
 import { CreateOrderDashboardPage } from '../support/pages/createOrderDashboardPage';
 //reference types = "cypress";
-describe('Prueba de inicio de sesion en BP', () => {
+describe('Creacion de orden combinada con mensajes pop-up', () => {
   let dataUser;
   const loginPage = new LoginPage();
   const createOrderDashboardPage = new CreateOrderDashboardPage();

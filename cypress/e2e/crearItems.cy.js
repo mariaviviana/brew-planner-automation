@@ -3,7 +3,7 @@ import { LocationPage } from '../support/pages/locationPage';
 import { ItemPage } from '../support/pages/itemPage';
 import { InventoryPage } from '../support/pages/inventoryPage';
 //reference types = "cypress";
-describe('Prueba de inicio de sesion en BP', () => {
+describe('Creacion de items', () => {
   let dataUser;
   let dataItem;
   const loginPage = new LoginPage();
