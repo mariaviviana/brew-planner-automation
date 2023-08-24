@@ -8,22 +8,22 @@ export class CreateOrderDashboardPage {
     this.selectStyle = 'li[data-menu-index= "6"]';
     this.save = 'button[data-button="save"]';
     this.viewFermenter = 'div[class*="is-fermenter"]';
-    this.publicButton='button[class="with-opacity btn-right-fixed btn-right-upload hidden-xs"]';
-    this.buttonRight='div[class*="react-draggable react-grid-item"]:eq(1)';
+    this.publicButton = '.btn-right-fixed.btn-right-upload'; //'button[class="with-opacity btn-right-fixed btn-right-upload hidden-xs"]'//;
+    this.buttonRight = 'div[class*="react-draggable react-grid-item"]:eq(1)';
     //this.buttonRight='span[class="dashboard-icon stop-dragging filtration-icon center-icon-small text-center icon-task icon-pumpkin"]';
-    this.editOption='a[class="context-menu icon"]';
-    this.actionButton='span[style="position:relative;padding:0 16px;"]';
-    this.brewConfig='div[tabindex="1"]';
-    this.fermConfig='div[tabindex="2"]';
-    this.packConfig='div[tabindex="3"]';
-    this.iconConfig='div[class="bp-textfield is-in-use"]';
+    this.editOption = 'a[class="context-menu icon"]';
+    this.actionButton = 'span[style="position:relative;padding:0 16px;"]';
+    this.brewConfig = 'div[tabindex="1"]';
+    this.fermConfig = 'div[tabindex="2"]';
+    this.packConfig = 'div[tabindex="3"]';
+    this.iconConfig = 'div[class="bp-textfield is-in-use"]';
   }
 
   openModal(posx, posy) {
     cy.get(this.dashboardPosition).trigger(
       'dblclick',
       { x: posx, y: posy },
-      { timeout: 2000, force: true }
+      { timeout: 3000, force: true }
     );
   }
 
@@ -51,36 +51,34 @@ export class CreateOrderDashboardPage {
     return cy.get(this.message, { timeout: 1000, force: true });
   }
 
-  buttonPublic(){
-    cy.contains(this.publicButton).click({
+  buttonPublic() {
+    cy.get(this.publicButton).click({
       timeout: 10000,
       force: true
     });
   }
 
-  rightButton(){
+  rightButton() {
     cy.get(this.buttonRight).rightclick({ force: true });
   }
 
-  selectEditOption(){
+  selectEditOption() {
     cy.get(this.editOption).first().click({ force: true });
   }
 
-  buttonConfirmAction(action){
-    cy.get(this.actionButton)
-      .contains(action)
-      .click();
+  buttonConfirmAction(action) {
+    cy.get(this.actionButton).contains(action).click();
   }
 
-  configBrew(){
+  configBrew() {
     cy.get(this.brewConfig).click();
   }
 
-  configFerm(){
+  configFerm() {
     cy.get(this.fermConfig).click();
   }
 
-  configPack(){
+  configPack() {
     cy.get(this.packConfig).click();
   }
 
@@ -96,7 +94,7 @@ export class CreateOrderDashboardPage {
     cy.get(this.iconConfig).children('input[value="Miel"]');
   }*/
 
-  saveButton(){
+  saveButton() {
     cy.contains('Guardar').click();
   }
 }

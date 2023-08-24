@@ -79,7 +79,7 @@ describe('Alta a proveedores', () => {
     cy.get('.form-group-textfield-input >input:eq(0)').click();
     cy.get('.form-group-textfield-input >input:eq(0)').type('2178');
     cy.get('.form-group-textfield-input >input:eq(1)').click();
-    cy.get('.form-group-textfield-input >input:eq(1)').type('1');
+    cy.get('.form-group-textfield-input >input:eq(1)').type('unidad');
     cy.get('.form-group-textfield-input > input:eq(2)')
       .should('be.visible') 
       .click({ force: true })
@@ -122,6 +122,5 @@ describe('Alta a proveedores', () => {
     cy.wait(1000);
     cy.get('tbody[class*="mui-table-body"] >tr:eq(1)').should('exist');
     cy.get('button[class*="form-group-button"]').eq(0).click();
-
   });
 });

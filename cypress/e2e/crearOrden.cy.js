@@ -36,8 +36,8 @@ describe('Creacion de orden combinada', () => {
     createOrderDashboardPage.rightButton();
     createOrderDashboardPage.selectEditOption();
     createOrderDashboardPage.buttonConfirmAction('Eliminar');
-    createOrderDashboardPage.buttonConfirmAction('CONFIRMAR');  
-    cy.wait(5000);
+    createOrderDashboardPage.buttonConfirmAction('CONFIRMAR');
+    cy.wait(12000);
     createOrderDashboardPage.buttonPublic();
   });
 
