@@ -3,8 +3,7 @@ export class ItemPage {
     this.buttonBurger =
       'button[style*="margin-top:8px;margin-right:8px;margin-left:-16px;"]';
     this.item = 'div[tabindex="0"]>div[class="app-main__side-bar-item"]';
-    this.inputName = '.form-group-textfield-input input';
-    this.inputUnit = '.form-group-textfield-input input';
+    this.input = '.form-group-textfield-input input';
     this.locationField = 'div[class="bp-textfield"]';
     this.createButton =
       'button[class="form-group-button form-group-button-icon primary-icon "]';
@@ -20,7 +19,7 @@ export class ItemPage {
   }
 
   nameItem(name) {
-    cy.get(this.inputName).eq(0).click().type(name);
+    cy.get(this.input).eq(0).click().type(name);
   }
 
   selectCategory(categoria) {
@@ -32,7 +31,7 @@ export class ItemPage {
   }
 
   selectUnit(name) {
-    cy.get(this.inputUnit).eq(2).click().type(name);
+    cy.get(this.input).eq(2).click().type(name);
   }
 
   selectLocation() {

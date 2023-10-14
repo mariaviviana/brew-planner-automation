@@ -19,12 +19,6 @@ describe('Creacion de orden combinada', () => {
     loginPage.botonIngresar();
   });
 
-  /*it('Deberia iniciar sesion con usuario y contraseña validos', () => {
-    loginPage.ingresarUser(dataUser.user);
-    loginPage.ingresarPass(dataUser.pass);
-    loginPage.botonIngresar();
-  });*/
-
   it('Deberia dar de alta a una orden combinada y eliminarla', () => {
     createOrderDashboardPage.openModal(500, 300);
     createOrderDashboardPage.openMenuBeerStyles();
@@ -54,19 +48,13 @@ describe('Creacion de orden combinada', () => {
     createOrderDashboardPage.selectEditOption();
     createOrderDashboardPage.configBrew();
     cy.wait(1000);
-    cy.get('div[class="bp-textfield is-in-use"]')
-      .children('input[value="Fruta"]')
-      .should('exist');
+    createOrderDashboardPage.configItemBrew().should('exist');
     createOrderDashboardPage.configFerm();
     cy.wait(1000);
-    cy.get('div[class="bp-textfield is-in-use"]')
-      .children('input[value="Calabaza"]')
-      .should('exist');
+    createOrderDashboardPage.configItemFerm().should('exist');
     createOrderDashboardPage.configPack();
     cy.wait(1000);
-    cy.get('div[class="bp-textfield is-in-use"]')
-      .children('input[value="Miel"]')
-      .should('exist');
+    createOrderDashboardPage.configItemPack().should('exist');
     createOrderDashboardPage.saveButton();
   });
 });

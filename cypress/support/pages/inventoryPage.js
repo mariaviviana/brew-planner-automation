@@ -7,10 +7,8 @@ export class InventoryPage {
     this.adjustButton = '.form-group-button.form-group-button-icon';
     this.adjustField =
       'div[class="bp-location-adjusts-modal__fields"] > div[class="bp-location-adjusts-modal__input"]';
-
     this.saveButton =
       '.dashboard-modal-content.bp-custom-modal__content.inventory-transfer-modal.modal-adjust button';
-
     this.textFVerify =
       'tbody[class="mui-table-body admin-table-body"] tr:eq(0)';
     this.textSVerify =

@@ -1,6 +1,8 @@
 import { LoginPage } from '../support/pages/loginPage';
 import { ProductPage } from '../support/pages/productPage';
 import { CreateOrderDashboardPage } from '../support/pages/createOrderDashboardPage';
+import { OrderWithProductPage } from '../support/pages/orderWithProductPage';
+
 //reference types = "cypress";
 describe('Creacion de un producto', () => {
   let dataUser;
@@ -8,6 +10,7 @@ describe('Creacion de un producto', () => {
   const loginPage = new LoginPage();
   const productPage = new ProductPage();
   const createOrderDashboardPage = new CreateOrderDashboardPage();
+  const orderWithProductPage = new OrderWithProductPage();
 
   before('Asociando archivo Json', () => {
     cy.fixture('dataLogin').then((data) => {
@@ -29,105 +32,64 @@ describe('Creacion de un producto', () => {
     productPage.buttonAdmin();
     productPage.selectProducts();
     cy.wait(1000);
-    cy.get('div[class="form-group-textfield-input"]>input:eq("0")').type(
-      'super pancho'
-    );
-    cy.get(
-      'div[class="basic-form-fields"] >div[class="form-group form-group-textfield-suggested is-dark"]'
-    )
-      .eq(0)
-      .type('{downarrow}');
-    cy.get(
-      'div[class="bp-textfield-suggested-list"] >ul>li[class="bp-textfield-suggested-list-item"]:eq(5)'
-    ).click();
-    cy.get(
-      'div[class="basic-form-fields"] >div[class="form-group form-group-textfield-suggested is-dark"]'
-    )
-      .eq(1)
-      .type('{downarrow}');
-    cy.get(
-      'div[class="bp-textfield-suggested-list"] >ul >li[class="bp-textfield-suggested-list-item"]:eq(8)'
-    ).click();
-    cy.get('div[class="form-group-textfield-input"]>input:eq("1")')
-      .clear()
-      .type('1');
-    cy.get('button[class*="form-group-button"]').click();
+    productPage.productName(0, 'super pancho');
+    productPage.selectProductField(0);
+    productPage.selectBeerStyleList(5);
+    productPage.selectProductField(1);
+    productPage.selectBeerStyleList(8);
+    productPage.productName(1, '1');
+    productPage.saveButton();
     cy.wait(2000);
-    cy.get('tbody[class="mui-table-body admin-table-body"]').click();
-    cy.get(
-      'tbody[class="mui-table-body admin-table-body"] >tr >td:eq(0)'
-    ).should('have.text', 'super pancho');
+    productPage.selectNewProduct();
+    productPage.newProductIsVisible().should('have.text', 'super pancho');
   });
 
   it('Deberia configurar los items del producto', () => {
     productPage.buttonAdmin();
     productPage.selectProducts();
     cy.wait(2000);
-    cy.get('tbody[class="mui-table-body admin-table-body"]').click();
-    cy.get('.basic-form-buttons > span > button:eq(0)').click();
+    productPage.selectNewProduct();
+    productPage.buttonConfigIcons(0);
     //select icons
-    cy.get('.bp-grid-item-withfilter > div:eq(9)').click();
-    cy.get('.bp-grid-item-withfilter > div:eq(26)').click();
-    cy.get('.bp-grid-item-withfilter > div:eq(38)').click();
-    cy.get('div[class="basic-form-content pull-left"]>button:eq(1)').click();
-    cy.get('.basic-form-buttons > span:eq(1)').click();
+    productPage.selectIconsSubstract(9);
+    productPage.selectIconsSubstract(26);
+    productPage.selectIconsSubstract(38);
+    productPage.saveIcons(1);
+    productPage.buttonBack(1);
+    
     //1 select subtraction items
-    cy.get('.bp-textfield__input').type('{downarrow}');
-    cy.get('.bp-textfield-suggested-list > ul > li:eq(0)').click({
-      force: true
-    });
-    cy.get('.form-group-textfield-input > input').clear();
-    cy.get('.form-group-textfield-input > input').clear();
-    cy.get('.form-group-textfield-input > input').type('1', { force: true });
-    cy.get(
-      'button[class="form-group-button form-group-button-icon primary-icon "]'
-    ).click();
-    cy.get(
-      'tbody[class="mui-table-body admin-table-body"] >tr:eq(0) >td:eq(0)'
-    ).should('have.text', 'pan');
-    cy.get(
-      'tbody[class="mui-table-body admin-table-body"] >tr:eq(0) >td:eq(1)'
-    ).should('have.text', '1,00 unidad');
-
+    productPage.itemListButton();
+    productPage.selectSuggestedItems(0);
+    productPage.clearFieldAmount();
+    productPage.clearFieldAmount();
+    productPage.inputAmount();
+    productPage.addButton();
+    productPage.verifyItemOne(0).should('have.text', 'pan');
+    productPage.verifyItemOne(1).should('have.text', '1,00 unidad');
+    
     //2 select subtraction items
-    cy.get('.bp-textfield__input').type('{downarrow}');
-    cy.get('.bp-textfield-suggested-list > ul > li:eq(2)').click({
-      force: true
-    });
-    cy.get('.form-group-textfield-input > input').clear();
-    cy.get('.form-group-textfield-input > input').clear();
-    cy.get('.form-group-textfield-input > input').type('1', { force: true });
-    cy.get(
-      'button[class="form-group-button form-group-button-icon primary-icon "]'
-    ).click();
-    cy.get(
-      'tbody[class="mui-table-body admin-table-body"] >tr:eq(1) >td:eq(0)'
-    ).should('have.text', 'salchicha');
-    cy.get(
-      'tbody[class="mui-table-body admin-table-body"] >tr:eq(1) >td:eq(1)'
-    ).should('have.text', '1,00 unidad');
-
-    cy.get('div[class="basic-form-buttons"]>span:eq(2)>button').click();
+    productPage.itemListButton();
+    productPage.selectSuggestedItems(2);
+    productPage.clearFieldAmount();
+    productPage.clearFieldAmount();
+    productPage.inputAmount();
+    productPage.addButton();
+    productPage.verifyItemTwo(0).should('have.text', 'salchicha');
+    productPage.verifyItemTwo(1).should('have.text', '1,00 unidad');
+    productPage.selectAddItems();
+    
     //select adition item
-    cy.get('div[class="bp-textfield-suggested"]').type('{downarrow}');
-    cy.get('.bp-textfield-suggested-list > ul > li:eq(1)').click({
-      force: true
-    });
-    cy.get('.form-group-textfield-input > input').clear();
-    cy.get('.form-group-textfield-input > input').clear();
-    cy.get('.form-group-textfield-input > input').type('1', { force: true });
-    cy.get(
-      'button[class="form-group-button form-group-button-icon primary-icon "]'
-    ).click();
+    productPage.suggestedItemAdition();
+    productPage.selectSuggestedItems(1);
+    productPage.clearFieldAmount();
+    productPage.clearFieldAmount();
+    productPage.inputAmount();
+    productPage.addButton();
     cy.wait(1000);
-    cy.get(
-      'tbody[class="mui-table-body admin-table-body"] >tr:eq(0) >td:eq(0)'
-    ).should('have.text', 'pancho');
-    cy.get(
-      'tbody[class="mui-table-body admin-table-body"] >tr:eq(0) >td:eq(1)'
-    ).should('have.text', '1,00 unidad');
+    productPage.verifyItemOne(0).should('have.text', 'pancho');
+    productPage.verifyItemOne(1).should('have.text', '1,00 unidad');
     //atras
-    cy.get('div[class="basic-form-buttons"]>span>button:eq(0)').click();
+    productPage.buttonStart(0);
   });
 
   it('Deberia dar de alta una orden combinada y verificar que tenga el producto configurado', () => {
@@ -136,135 +98,81 @@ describe('Creacion de un producto', () => {
     createOrderDashboardPage.openMenuBeerStyles();
     createOrderDashboardPage.selectBeerStyle();
     createOrderDashboardPage.buttonSave();
-    //cy.get('.is-to-day').scrollIntoView().invoke('offset', { top: 2000 });
+    cy.get('.is-to-day').scrollIntoView().invoke('offset', { top: 2000 });
     cy.wait(5000);
     //BREWING
     createOrderDashboardPage.rightButton();
     createOrderDashboardPage.selectEditOption();
-    cy.get('.custom-notification').each(($notificacion) => {
-      cy.wrap($notificacion).click();
-    });
+    createOrderDashboardPage.closeNotification();
     createOrderDashboardPage.configBrew();
-    cy.get(
-      '[style="width: 100%; position: relative; text-align: initial;"] > .modal-order-task-container > .modal-order-task-list > [data-index-day="1"] > .toggle-icon > .material-icons'
-    ).click({ force: true });
-    cy.get(
-      'li[class="dashboard-modal-task-collapsible-content dashboard-modal-task-collapsible-content__list-header row"]>div:eq(0) >div'
-    ).should('have.text', 'super pancho ');
-    cy.get('.dashboard-modal-task-collapsible-content__input input').should(
-      'have.attr',
-      'value',
-      '5'
-    );
-    cy.get('input[name="isConfirmProduct"]:eq(0)').click();
-    cy.get('span[data-inventory-info="enough_inventory"]').should(
-      'have.css',
-      'background-color',
-      'rgb(15, 157, 88)'
-    );
-    cy.get(
-      'span[class="material-icons modal-order-task-list-item__receipe is-body"] >i:eq(0)'
-    ).click();
-    cy.get(
-      'div[class="dashboard-modal-item-amount__list"] >ul >li:eq(0) >div >span'
-    ).should('have.text', 'pan (unidad)Cantidad');
-    cy.get(
-      'div[class="dashboard-modal-item-amount__list"] >ul >li:eq(1) >div >span'
-    ).should('have.text', 'salchicha (unidad)Cantidad');
-    cy.get('button[class="dashboard-modal-content__button-save"]').click();
-    //cy.get('.is-to-day').scrollIntoView().invoke('offset', { top: 1000 });
+    orderWithProductPage.openPlusButtonBrew(0);
+    orderWithProductPage.verifyProduct().should('have.text', 'super pancho ');
+    orderWithProductPage.verifyValue().should('have.attr', 'value', '5');
+    orderWithProductPage.buttonConfirm(0);
+    orderWithProductPage
+      .verifyColorInventory()
+      .should('have.css', 'background-color', 'rgb(15, 157, 88)');
+    orderWithProductPage.openItemsProduct(0);
+    orderWithProductPage
+      .verifyItemOne()
+      .should('have.text', 'pan (unidad)Cantidad');
+    orderWithProductPage
+      .verifyItemTwo()
+      .should('have.text', 'salchicha (unidad)Cantidad');
+    orderWithProductPage.buttonSave();
+    cy.get('.is-to-day').scrollIntoView().invoke('offset', { top: 1000 });
     cy.wait(5000);
-    cy.get(
-      'button[class="with-opacity btn-right-fixed btn-right-upload hidden-xs"]'
-    ).click();
+    orderWithProductPage.buttonPublic();
     cy.wait(6000);
-    cy.get(
-      'span[data-inventory-status-icon-state="all_discounted_confirmed"]'
-    ).should('exist');
+    orderWithProductPage.verifyCheckDiscount().should('exist');
     //FERMENTING
     createOrderDashboardPage.rightButton();
     createOrderDashboardPage.selectEditOption();
-    cy.get('.custom-notification').each(($notificacion) => {
-      cy.wrap($notificacion).click();
-    });
+    createOrderDashboardPage.closeNotification();
     createOrderDashboardPage.configFerm();
-    cy.get(
-      '[style="width: 100%; position: relative; text-align: initial;"] > .modal-order-task-container > .modal-order-task-list > [data-index-day="1"] > .toggle-icon > .material-icons'
-    ).click();
-    cy.get(
-      'li[class="dashboard-modal-task-collapsible-content dashboard-modal-task-collapsible-content__list-header row"]>div:eq(0) >div'
-    ).should('have.text', 'super pancho ');
-    cy.get('.dashboard-modal-task-collapsible-content__input input').should(
-      'have.attr',
-      'value',
-      '5'
-    );
-    cy.get('input[name="isConfirmProduct"]').eq(1).click();
-    cy.get('span[data-inventory-info="enough_inventory"]').should(
-      'have.css',
-      'background-color',
-      'rgb(15, 157, 88)'
-    );
-    cy.get(
-      'span[class="material-icons modal-order-task-list-item__receipe is-body"] >i:eq(1)'
-    ).click();
-    cy.get(
-      'div[class="dashboard-modal-item-amount__list"] >ul >li:eq(0) >div >span'
-    ).should('have.text', 'pan (unidad)Cantidad');
-    cy.get(
-      'div[class="dashboard-modal-item-amount__list"] >ul >li:eq(1) >div >span'
-    ).should('have.text', 'salchicha (unidad)Cantidad');
-    cy.get('button[class="dashboard-modal-content__button-save"]').click();
-    //cy.get('.is-to-day').scrollIntoView().invoke('offset', { top: 1500 });
+    orderWithProductPage.openPlusButtonFerm();
+    orderWithProductPage.verifyProduct().should('have.text', 'super pancho ');
+    orderWithProductPage.verifyValue().should('have.attr', 'value', '5');
+    orderWithProductPage.buttonConfirm(1);
+    orderWithProductPage
+      .verifyColorInventory()
+      .should('have.css', 'background-color', 'rgb(15, 157, 88)');
+    orderWithProductPage.openItemsProduct(1);
+    orderWithProductPage
+      .verifyItemOne()
+      .should('have.text', 'pan (unidad)Cantidad');
+    orderWithProductPage
+      .verifyItemTwo()
+      .should('have.text', 'salchicha (unidad)Cantidad');
+    orderWithProductPage.buttonSave();
+    cy.get('.is-to-day').scrollIntoView().invoke('offset', { top: 1500 });
     cy.wait(5000);
-    cy.get(
-      'button[class="with-opacity btn-right-fixed btn-right-upload hidden-xs"]'
-    ).click();
-    cy.wait(6000);
-    cy.get(
-      'span[data-inventory-status-icon-state="all_discounted_confirmed"]'
-    ).should('exist');
+    orderWithProductPage.buttonPublic();
+    cy.wait(7000);
+    orderWithProductPage.verifyCheckDiscount().should('exist');
     //PACKAGING
     createOrderDashboardPage.rightButton();
     createOrderDashboardPage.selectEditOption();
-    cy.get('.custom-notification').each(($notificacion) => {
-      cy.wrap($notificacion).click();
-    });
+    createOrderDashboardPage.closeNotification();
     createOrderDashboardPage.configPack();
-    cy.get(
-      '[style="width: 100%; position: relative; text-align: initial;"] > .modal-order-task-container > .modal-order-task-list > [data-index-day="1"] > .toggle-icon > .material-icons'
-    ).click();
-    cy.get(
-      'li[class="dashboard-modal-task-collapsible-content dashboard-modal-task-collapsible-content__list-header row"]>div:eq(0) >div'
-    ).should('have.text', 'super pancho ');
-    cy.get('.dashboard-modal-task-collapsible-content__input input').should(
-      'have.attr',
-      'value',
-      '5'
-    );
-    cy.get('span[data-inventory-info="enough_inventory"]').should(
-      'have.css',
-      'background-color',
-      'rgb(15, 157, 88)'
-    );
-    cy.get(
-      'span[class="material-icons modal-order-task-list-item__receipe is-body"] >i:eq(2)'
-    ).click();
-    cy.get(
-      'div[class="dashboard-modal-item-amount__list"] >ul >li:eq(0) >div >span'
-    ).should('have.text', 'pan (unidad)Cantidadmode_edit');
-    cy.get(
-      'div[class="dashboard-modal-item-amount__list"] >ul >li:eq(1) >div >span'
-    ).should('have.text', 'salchicha (unidad)Cantidadmode_edit');
-    cy.get('button[class="dashboard-modal-content__button-save"]').click();
-    //cy.get('.is-to-day').scrollIntoView().invoke('offset', { top: 2500 });
+    orderWithProductPage.openPlusButtonPack();
+    orderWithProductPage.verifyProduct().should('have.text', 'super pancho ');
+    orderWithProductPage.verifyValue().should('have.attr', 'value', '5');
+    orderWithProductPage
+      .verifyColorInventory()
+      .should('have.css', 'background-color', 'rgb(15, 157, 88)');
+    orderWithProductPage.openItemsProduct(2);
+    orderWithProductPage
+      .verifyItemOne()
+      .should('have.text', 'pan (unidad)Cantidadmode_edit');
+    orderWithProductPage
+      .verifyItemTwo()
+      .should('have.text', 'salchicha (unidad)Cantidadmode_edit');
+    orderWithProductPage.buttonSave();
+    cy.get('.is-to-day').scrollIntoView().invoke('offset', { top: 2500 });
     cy.wait(5000);
-    cy.get(
-      'button[class="with-opacity btn-right-fixed btn-right-upload hidden-xs"]'
-    ).click({ force: true });
-    /*cy.wait(5000);
-    cy.get(
-      'span[data-inventory-status-icon-state="all_discounted_confirmed"]'
-    ).should('exist');*/
+    orderWithProductPage.buttonPublic();
+    cy.wait(5000);
+    orderWithProductPage.verifyCheckDiscount().should('exist');
   });
 });

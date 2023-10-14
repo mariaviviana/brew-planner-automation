@@ -28,99 +28,85 @@ describe('Alta a proveedores', () => {
     suppliersPage.selectSuppliers();
     cy.wait(2000);
     //proveedores
-    cy.get('.form-group-textfield-input >input').eq(0).type('Serenisima');
-    cy.get('.form-group-textfield-input >input').eq(1).type('12');
-    cy.get('.form-group-textfield-input >input').eq(2).type('21');
-    cy.get(
-      'button[class="form-group-button form-group-button-icon primary-icon "]'
-    ).click();
-    cy.get('tbody[class*="mui-table-body"]').should('exist');
+    suppliersPage.supplierData(0, 'Serenisima');
+    suppliersPage.supplierData(1, '12');
+    suppliersPage.supplierData(2, '21');
+    suppliersPage.addButton();
+    suppliersPage.shouldBeList().should('exist');
     cy.wait(2000);
     //direcciones
-    cy.get('tbody[class="mui-table-body admin-table-body"]>tr:eq(1)').click();
-    cy.get('.basic-form-buttons >span:eq(0) >button').click();
-    cy.get('.form-group-textfield-input >input')
-      .eq(0)
-      .clear()
-      .type('Venecia135');
-    cy.get('.form-group-textfield-input >input').eq(1).clear().type('1625');
-    cy.get('.form-group-textfield-input >input')
-      .eq(2)
-      .clear()
-      .type('Loma Verde');
-    cy.get('.form-group-textfield-input >input')
-      .eq(3)
-      .clear({ force: true })
-      .type('Buenos Aires');
-    cy.get('.form-group-textfield-input >input')
-      .eq(4)
-      .clear()
-      .type('Argentina');
-    cy.get(
-      'button[class="form-group-button form-group-button-icon primary-icon "]'
-    ).click();
-    cy.get('tbody[class*="mui-table-body"]').should('exist');
+    suppliersPage.selectSupplier();
+    suppliersPage.addDataButton(0);
+    suppliersPage.inputAddressData(0, 'Venecia135');
+    suppliersPage.inputAddressData(1, '1625');
+    suppliersPage.inputAddressData(2, 'Loma Verde');
+    suppliersPage.inputAddressData(3, 'Buenos Aires');
+    suppliersPage.inputAddressData(4, 'Argentina');
+    suppliersPage.addButton();
+    suppliersPage.shouldBeList().should('exist');
     cy.wait(2000);
     //contactos
-    cy.get('.basic-form-buttons >span >button').eq(1).click();
-    cy.get('.basic-form-fields >div').eq(0).type('viviana');
-    cy.get('.form-group-dropdown-input > div').eq(0).click();
-    cy.get('div.form-group-dropdown-input > div > div#1').click();
-    cy.get('.basic-form-fields >div').eq(2).click().type('elmaiten2@gmail.com');
-    cy.get('button[class*="form-group-button"]').eq(3).click().click();
-    cy.get('tbody[class*="mui-table-body"]').should('exist');
+    suppliersPage.addDataButton(1);
+    suppliersPage.addContactName('Viviana');
+    suppliersPage.deployContactList();
+    suppliersPage.selectContactName();
+    suppliersPage.addEmail('elmaiten2@gmail.com');
+    suppliersPage.addButton();
+    suppliersPage.shouldBeList().should('exist');
     cy.wait(2000);
     //suppliersPage.closeNotification();
-    cy.get('.basic-form-buttons >span >button').eq(2).click().click();
+    suppliersPage.addDataButton(2);
     cy.wait(2000);
     //items 1er Item
-    cy.get('.bp-textfield-suggested >div >label').type('{downarrow}');
-    cy.get('.bp-textfield-suggested-list >ul >li:eq(0)').click();
-    cy.get('.form-group-textfield-input >input:eq(0)').click();
-    cy.get('.form-group-textfield-input >input:eq(0)').type('2178');
-    cy.get('.form-group-textfield-input >input:eq(1)').click();
-    cy.get('.form-group-textfield-input >input:eq(1)').type('unidad');
-    cy.get('.form-group-textfield-input > input:eq(2)')
-      .should('be.visible') 
+    suppliersPage.deployItemsList();
+    suppliersPage.selectItems(0);
+    suppliersPage.selectField(0);
+    suppliersPage.inputItemInfo(0, '2178');
+    suppliersPage.selectField(1);
+    suppliersPage.inputItemInfo(1, 'unidad');
+    suppliersPage
+      .showItem(2)
+      .should('be.visible')
       .click({ force: true })
       .clear()
       .type('10');
-      cy.get('.form-group-textfield-input > input:eq(3)')
-      .should('be.visible') 
+    suppliersPage
+      .showItem(3)
+      .should('be.visible')
       .click({ force: true })
       .clear()
       .type('12');
-    cy.get('.form-group-textfield-input >input:eq(4)').click();
-    cy.get('.form-group-textfield-input >input:eq(4)').type('1');
-    cy.get('.form-group-textfield-input >input:eq(5)').click();
-    cy.get('.form-group-textfield-input >input:eq(5)').type('1');
-    cy.get('button[class*="form-group-button"]').eq(3).click();
-    cy.wait(1000);
-    cy.get('tbody[class*="mui-table-body"]>tr:eq(0)').should('exist');
+    suppliersPage.selectField(4);
+    suppliersPage.inputItemInfo(4, '1');
+    suppliersPage.selectField(5);
+    suppliersPage.inputItemInfo(5, '1');
+    suppliersPage.addButton();
+    cy.wait(2000);
     //2do Item
-    cy.get('.bp-textfield-suggested >div >label').type('{downarrow}');
-    cy.get('.bp-textfield-suggested-list >ul >li:eq(1)').click();
-    cy.get('.form-group-textfield-input >input:eq(0)').click();
-    cy.get('.form-group-textfield-input >input:eq(0)').type('2178');
-    cy.get('.form-group-textfield-input >input:eq(1)').click();
-    cy.get('.form-group-textfield-input >input:eq(1)').type('1');
-    cy.get('.form-group-textfield-input > input:eq(2)')
-      .should('be.visible') 
+    suppliersPage.deployItemsList();
+    suppliersPage.selectItems(1);
+    suppliersPage.selectField(0);
+    suppliersPage.inputItemInfo(0, '2178');
+    suppliersPage.selectField(1);
+    suppliersPage.inputItemInfo(1, 'unidad');
+    suppliersPage
+      .showItem(2)
+      .should('be.visible')
       .click({ force: true })
       .clear()
       .type('10');
-      cy.get('.form-group-textfield-input > input:eq(3)')
-      .should('be.visible') 
+    suppliersPage
+      .showItem(3)
+      .should('be.visible')
       .click({ force: true })
       .clear()
       .type('12');
-    cy.get('.form-group-textfield-input >input:eq(4)').click();
-    cy.get('.form-group-textfield-input >input:eq(4)').type('1');
-    cy.get('.form-group-textfield-input >input:eq(5)').click();
-    cy.get('.form-group-textfield-input >input:eq(5)').type('1');
-    cy.get('button[class*="form-group-button"]').eq(3).click();
-    cy.wait(1000);
-    cy.get('tbody[class*="mui-table-body"] >tr:eq(1)').should('exist');
-    cy.get('button[class*="form-group-button"]').eq(0).click();
+    suppliersPage.selectField(4);
+    suppliersPage.inputItemInfo(4, '1');
+    suppliersPage.selectField(5);
+    suppliersPage.inputItemInfo(5, '1');
+    suppliersPage.addButton();
+    suppliersPage.shouldBeList().should('exist');
+    suppliersPage.selectBackButton();
   });
 });
